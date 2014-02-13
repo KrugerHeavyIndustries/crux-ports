@@ -1,0 +1,20 @@
+# Description: Taiko OpenID provider
+# URL: http://www.krugerheavyindustries.com/taiko
+# Maintainer: Chris Kruger crux-maint at krugerheavyindustries dot com
+# Depends on: premake libtidy libconfuse
+
+name=taiko
+version=0.1.1
+release=1
+source=(https://github.com/KrugerHeavyIndustries/$name/archive/$version.tar.gz)
+
+build() {
+	cd $name-$version
+	premake4 --no-pam gmake
+	cd build
+	make config=release
+	install -D -m755 \
+		$SRC/$name-$version/bin/release/taikod $PKG/usr/sbin/taikod
+	install -D -o root -g root -m700 \
+		$SRC/$name-$version/example.conf $PKG/etc/taikod.conf
+}

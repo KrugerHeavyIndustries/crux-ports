@@ -1,0 +1,18 @@
+# Description: premake4 development environment
+# URL: http://industriousone.com/premake
+# Maintainer: Chris Kruger crux-maint at krugerheavyindustries dot com
+# Depends on: 
+
+name=premake
+version=4.3
+release=1
+#source=(http://sourceforge.net/projects/${name}/files/Premake/${version}/${name}-${version}-src.zip/download)
+source=(http://download.sourceforge.net/${name}/${name}-${version}-src.zip)
+
+build() {
+   pushd $name-$version/build/gmake.unix
+   make
+   popd 
+   cd $name-$version/bin/release
+   install -D -m 755 premake4 $PKG/usr/bin/premake4
+}
